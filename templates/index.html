@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SentimentAI - Precision Sentiment Analysis</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>SentimentAI | Intelligent Text Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --positive: #22c55e;
-            --negative: #ef4444;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --neutral: #f59e0b;
         }
 
         * {
@@ -26,109 +28,161 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: var(--bg-gradient);
+            background-color: var(--bg-color);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Mesh */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 25%);
+            z-index: -1;
+            animation: pulseBg 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
 
         .container {
             width: 100%;
-            max-width: 600px;
-            padding: 2rem;
-            z-index: 10;
+            max-width: 550px;
+            padding: 1.5rem;
+            position: relative;
         }
 
+        /* Main Glass Card */
         .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
             border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.8s ease-out;
+            padding: 3rem 2.5rem;
+            box-shadow: 
+                0 20px 40px -10px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Header Styling */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-icon {
+            font-size: 2.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            display: inline-block;
         }
 
         h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #818cf8, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
+            letter-spacing: -0.02em;
         }
 
-        p.subtitle {
-            color: var(--text-sub);
-            text-align: center;
-            margin-bottom: 2.5rem;
-            font-size: 1.1rem;
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
-        .input-group {
-            margin-bottom: 2rem;
+        /* Input Area */
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 1.5rem;
         }
 
         textarea {
             width: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--glass-border);
+            height: 160px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 1.25rem;
-            color: white;
-            font-family: inherit;
+            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
             font-size: 1rem;
             resize: none;
-            height: 150px;
             transition: all 0.3s ease;
             outline: none;
         }
 
-        textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        textarea::placeholder {
+            color: rgba(148, 163, 184, 0.5);
         }
 
-        button {
+        textarea:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        /* Action Button */
+        .analyze-btn {
             width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 16px;
             padding: 1rem;
-            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px;
+            background: var(--primary-gradient);
+            color: white;
+            font-family: inherit;
             font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        button:hover {
-            background: var(--primary-hover);
+        .analyze-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
         }
 
-        button:active {
+        .analyze-btn:active {
             transform: translateY(0);
         }
 
-        .result-container {
-            margin-top: 2.5rem;
+        .analyze-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Result Section */
+        .result-box {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
             text-align: center;
-            display: none;
-            animation: slideUp 0.5s ease-out;
+            display: none; /* Hidden by default */
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes slideUp {
@@ -136,104 +190,123 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .sentiment-label {
-            font-size: 0.9rem;
-            color: var(--text-sub);
+        .result-label {
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
         }
 
-        .sentiment-value {
+        .sentiment-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .sentiment-icon {
             font-size: 2rem;
-            font-weight: 600;
         }
 
-        .positive { color: var(--positive); }
-        .negative { color: var(--negative); }
+        .sentiment-text {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
 
-        .loader {
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255,255,255,0.3);
+        /* Dynamic Colors for JS */
+        .text-positive { color: var(--success); text-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+        .text-negative { color: var(--danger); text-shadow: 0 0 20px rgba(239, 68, 68, 0.3); }
+        .text-neutral { color: var(--neutral); }
+
+        /* Loader */
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 0.8s linear infinite;
             display: none;
-            margin: 0 auto;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Decorative circles */
-        .decoration {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 1;
-        }
-
-        .decor-1 {
-            background: rgba(99, 102, 241, 0.15);
-            top: -100px;
-            left: -100px;
-        }
-
-        .decor-2 {
-            background: rgba(192, 132, 252, 0.15);
-            bottom: -100px;
-            right: -100px;
+        /* Footer */
+        .footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(148, 163, 184, 0.4);
         }
     </style>
 </head>
 <body>
-    <div class="decoration decor-1"></div>
-    <div class="decoration decor-2"></div>
+
+    <div class="bg-mesh"></div>
 
     <div class="container">
         <div class="glass-card">
-            <h1>SentimentAI</h1>
-            <p class="subtitle">Understand the emotion behind every word.</p>
             
-            <div class="input-group">
-                <textarea id="textInput" placeholder="Enter your text here... e.g., 'This product is absolutely amazing!'"></textarea>
+            <div class="header">
+                <i class="fa-solid fa-brain logo-icon"></i>
+                <h1>SentimentAI</h1>
+                <p class="subtitle">Enter text below to detect emotional tone using Machine Learning.</p>
             </div>
 
-            <button id="analyzeBtn">
+            <div class="input-wrapper">
+                <textarea id="textInput" placeholder="Type or paste your text here to analyze..."></textarea>
+            </div>
+
+            <button id="analyzeBtn" class="analyze-btn">
                 <span id="btnText">Analyze Sentiment</span>
-                <div id="loader" class="loader"></div>
+                <i id="btnIcon" class="fa-solid fa-wand-magic-sparkles"></i>
+                <div id="loader" class="spinner"></div>
             </button>
 
-            <div id="resultContainer" class="result-container">
-                <div class="sentiment-label">Detected Sentiment</div>
-                <div id="sentimentValue" class="sentiment-value">Positive</div>
+            <div id="resultContainer" class="result-box">
+                <div class="result-label">Analysis Result</div>
+                <div class="sentiment-display">
+                    <i id="resultIcon" class="fa-solid fa-circle-question sentiment-icon"></i>
+                    <span id="sentimentValue" class="sentiment-text">--</span>
+                </div>
             </div>
+
+        </div>
+        
+        <div class="footer">
+            Powered by Python & ML Models
         </div>
     </div>
 
     <script>
         const analyzeBtn = document.getElementById('analyzeBtn');
         const btnText = document.getElementById('btnText');
+        const btnIcon = document.getElementById('btnIcon');
         const loader = document.getElementById('loader');
         const resultContainer = document.getElementById('resultContainer');
         const sentimentValue = document.getElementById('sentimentValue');
+        const resultIcon = document.getElementById('resultIcon');
         const textInput = document.getElementById('textInput');
 
         analyzeBtn.addEventListener('click', async () => {
             const text = textInput.value.trim();
-            if (!text) return;
+            if (!text) {
+                textInput.focus();
+                return;
+            }
 
-            // Show loading state
-            btnText.style.display = 'none';
+            // UI Loading State
+            btnText.textContent = "Analyzing...";
+            btnIcon.style.display = 'none';
             loader.style.display = 'block';
             analyzeBtn.disabled = true;
             resultContainer.style.display = 'none';
 
             try {
+                // Ensure this fetch URL matches your Flask/Django backend route
                 const response = await fetch('/predict', {
                     method: 'POST',
                     headers: {
@@ -242,18 +315,43 @@
                     body: JSON.stringify({ text }),
                 });
 
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
                 const data = await response.json();
                 
-                // Show result
-                sentimentValue.textContent = data.sentiment;
-                sentimentValue.className = 'sentiment-value ' + data.sentiment.toLowerCase();
+                // Process Result
+                const sentiment = data.sentiment; 
+                sentimentValue.textContent = sentiment;
+
+                // Reset Classes
+                sentimentValue.className = 'sentiment-text';
+                resultIcon.className = 'sentiment-icon fa-solid';
+
+                // Apply dynamic styling based on result string
+                const lowerSentiment = sentiment.toLowerCase();
+                
+                if (lowerSentiment.includes('positive')) {
+                    sentimentValue.classList.add('text-positive');
+                    resultIcon.classList.add('fa-face-smile', 'text-positive');
+                } else if (lowerSentiment.includes('negative')) {
+                    sentimentValue.classList.add('text-negative');
+                    resultIcon.classList.add('fa-face-frown', 'text-negative');
+                } else {
+                    sentimentValue.classList.add('text-neutral');
+                    resultIcon.classList.add('fa-face-meh', 'text-neutral');
+                }
+
                 resultContainer.style.display = 'block';
+
             } catch (error) {
                 console.error('Error:', error);
-                alert('An error occurred while analyzing sentiment.');
+                alert('Error connecting to the model. Please check the console.');
             } finally {
-                // Restore button state
-                btnText.style.display = 'block';
+                // Restore Button State
+                btnText.textContent = "Analyze Sentiment";
+                btnIcon.style.display = 'inline-block';
                 loader.style.display = 'none';
                 analyzeBtn.disabled = false;
             }
