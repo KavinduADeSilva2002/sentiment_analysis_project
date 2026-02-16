@@ -1,6 +1,6 @@
 import re
 import string
-import pandas as pd
+
 from nltk.stem import PorterStemmer
 import os
 

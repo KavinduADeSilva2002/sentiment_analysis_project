@@ -1,0 +1,12 @@
+.ipynb_checkpoints/
+notebooks/
+artifacts/
+env/
+activate
+requirements.tst
+test_pipeline.py
+debug_predict.py
+.git/
+.gitignore
+README.md
+*.ipynb
